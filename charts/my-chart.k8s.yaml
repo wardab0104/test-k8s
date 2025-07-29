@@ -2,14 +2,18 @@ apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    app: nginx
+    app: busybox-test
     cdk8s.io/metadata.addr: my-chart-my-pod-c8d79087
-  name: my-nginx-pod
+  name: my-busybox-pod
   namespace: default
 spec:
   automountServiceAccountToken: false
   containers:
-    - image: nginx:latest
+    - command:
+        - sh
+        - -c
+        - sleep infinity
+      image: busybox:latest
       imagePullPolicy: Always
       name: main
       resources:
@@ -24,39 +28,14 @@ spec:
         privileged: false
         readOnlyRootFilesystem: false
         runAsNonRoot: true
-      volumeMounts:
-        - mountPath: /var/cache/nginx
-          name: nginx-cache-volume
-        - mountPath: /var/run
-          name: nginx-run-volume
   dnsPolicy: ClusterFirst
   hostNetwork: false
   restartPolicy: Always
   securityContext:
-    fsGroup: 101
+    fsGroup: 65534
     fsGroupChangePolicy: Always
-    runAsGroup: 101
+    runAsGroup: 65534
     runAsNonRoot: true
-    runAsUser: 101
+    runAsUser: 65534
   setHostnameAsFQDN: false
   terminationGracePeriodSeconds: 30
-  volumes:
-    - emptyDir: {}
-      name: nginx-cache-volume
-    - emptyDir: {}
-      name: nginx-run-volume
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: nginx
-  name: nginx-service
-  namespace: default
-spec:
-  externalIPs: []
-  ports:
-    - port: 80
-      targetPort: 80
-  selector: {}
-  type: LoadBalancer
