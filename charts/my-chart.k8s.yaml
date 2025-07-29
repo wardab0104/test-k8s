@@ -8,7 +8,7 @@ metadata:
 spec:
   automountServiceAccountToken: false
   containers:
-    - image: nginx
+    - image: nginx:latest
       imagePullPolicy: Always
       name: main
       resources:
