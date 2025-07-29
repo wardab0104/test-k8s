@@ -3,7 +3,8 @@ kind: Pod
 metadata:
   labels:
     cdk8s.io/metadata.addr: my-chart-my-pod-c8d79087
-  name: my-chart-my-pod-c862e320
+  name: my-pod
+  namespace: default
 spec:
   automountServiceAccountToken: false
   containers:
