@@ -28,6 +28,6 @@ spec:
   restartPolicy: Always
   securityContext:
     fsGroupChangePolicy: Always
-    runAsNonRoot: true
+    runAsNonRoot: false
   setHostnameAsFQDN: false
   terminationGracePeriodSeconds: 30
